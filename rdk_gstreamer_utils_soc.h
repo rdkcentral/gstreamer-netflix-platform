@@ -36,10 +36,10 @@ namespace rdk_gstreamer_utils
     GstElement * configureUIAudioSink_soc(bool TTSenabled);
     bool isUIAudioVGAudioMixSupported_soc();
     unsigned int getNativeAudioFlag_soc();
-    void configAudioCap_soc(AudioAttributes *pAttrib, bool *audioaac, bool svpenabled, GstCaps **appsrcCaps);
+    void configAudioCap_soc(AudioAttributes *pAttrib, bool *audioaac, bool svpenabled, GstCaps **appsrcCaps, bool passthroughProperty);
     bool performAudioTrackCodecChannelSwitch_soc(struct rdkGstreamerUtilsPlaybackGrp *pgstUtilsPlaybackGroup, const void *pSampleAttr, AudioAttributes *pAudioAttr, uint32_t *pStatus, unsigned int *pui32Delay,
                                                  llong *pAudioChangeTargetPts, const llong *pcurrentDispPts, unsigned int *audio_change_stage, GstCaps **appsrcCaps,
-                                                 bool *audioaac, bool svpenabled, GstElement *aSrc, bool *ret);
+                                                 bool *audioaac, bool svpenabled, GstElement *aSrc, bool *ret, bool passthroughProperty);
     void setAppSrcParams_soc(GstElement *aSrc,MediaType mediatype);
     void setPixelAspectRatio_soc(GstCaps ** ppCaps,GstCaps *appsrcCaps,uint32_t pixelAspectRatioX,uint32_t pixelAspectRatioY);
     void deepElementAdded_soc (struct rdkGstreamerUtilsPlaybackGrp *pgstUtilsPlaybackGroup, GstBin* pipeline, GstBin* bin, GstElement* element);
@@ -54,4 +54,5 @@ namespace rdk_gstreamer_utils
     void setKeyFrameFlag_soc(GstBuffer *gstBuffer,bool val);
     bool getDelayTimerEnabled_soc();
     void SetAudioServerParam_soc(bool enabled);
+    void constructLLAudioPlayer_soc(int numChannel ,GstElement *gstPipeline ,GstElement *aSrc,GstElement *aSink,GstElement *aFilter,GstElement *aDecoder);
 } //namespace rdk_gstreamer_utils
