@@ -148,18 +148,18 @@ namespace rdk_gstreamer_utils {
         }
     }
 
-    void configAudioCap(AudioAttributes *pAttrib, bool *audioaac, bool svpenabled, GstCaps **appsrcCaps)
+    void configAudioCap(AudioAttributes *pAttrib, bool *audioaac, bool svpenabled, GstCaps **appsrcCaps, bool passthroughProperty)
     {
-        configAudioCap_soc(pAttrib,audioaac,svpenabled,appsrcCaps);
+        configAudioCap_soc(pAttrib,audioaac,svpenabled,appsrcCaps,passthroughProperty);
     }
 
     bool performAudioTrackCodecChannelSwitch(struct rdkGstreamerUtilsPlaybackGrp *pgstUtilsPlaybackGroup,const void *pSampleAttr, AudioAttributes *pAudioAttr, uint32_t *pStatus, unsigned int *pui32Delay,
                                                  llong *pAudioChangeTargetPts,const llong *pcurrentDispPts, unsigned int *audio_change_stage, GstCaps **appsrcCaps,
-                                                 bool *audioaac, bool svpenabled, GstElement *aSrc, bool *ret)
+                                                 bool *audioaac, bool svpenabled, GstElement *aSrc, bool *ret, bool passthroughProperty)
     {
         return performAudioTrackCodecChannelSwitch_soc(pgstUtilsPlaybackGroup, pSampleAttr,pAudioAttr,pStatus, pui32Delay,
                                                 pAudioChangeTargetPts,pcurrentDispPts,audio_change_stage,appsrcCaps,
-                                                audioaac,svpenabled, aSrc,ret);
+                                                audioaac,svpenabled,aSrc,ret,passthroughProperty);
     }
 
     void setAppSrcParams(GstElement *aSrc,MediaType mediatype)
@@ -216,7 +216,7 @@ namespace rdk_gstreamer_utils {
     {
         return switchToAudioMasterMode_soc();
     }
-    
+
     void setKeyFrameFlag(GstBuffer *gstBuffer,bool val)
     {
         setKeyFrameFlag_soc(gstBuffer,val);
@@ -231,4 +231,10 @@ namespace rdk_gstreamer_utils {
     {
        SetAudioServerParam_soc(enabled);
     }
+
+    void constructLLAudioPlayer(int numChannel ,GstElement *gstPipeline ,GstElement *aSrc,GstElement *aSink,GstElement *aFilter,GstElement *aDecoder)
+    {
+        constructLLAudioPlayer_soc(numChannel,gstPipeline ,aSrc,aSink,aFilter,aDecoder);
+    }
+
 } // namespace rdk_gstreamer_utils
