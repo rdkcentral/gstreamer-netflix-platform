@@ -17,7 +17,6 @@
 * limitations under the License.
 */
 
-
 #include "rdk_gstreamer_utils.h"
 #include "rdk_gstreamer_utils_soc.h"
 #include <gst/gst.h>
