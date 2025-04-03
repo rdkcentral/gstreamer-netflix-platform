@@ -16,7 +16,6 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-
 #ifndef __RDK_GSTREAMER_UTILS_H___
 #define __RDK_GSTREAMER_UTILS_H___
 #include <gst/gst.h>
@@ -26,13 +25,10 @@
 #include <string.h>
 #include <map>
 #include <string>
-
 namespace rdk_gstreamer_utils {
-
     #define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
     #define LOG_RGU(fmt, ...) do { fprintf(stderr, "[RGU:%s:%d]: " fmt "\n", __FILENAME__, __LINE__, ##__VA_ARGS__); fflush(stderr); } while (0)
     typedef long long llong;
-
     enum rgu_Ease
     {
         EaseLinear = 0,
@@ -47,7 +43,6 @@ namespace rdk_gstreamer_utils {
         GSTAUDIOPARSER,
         GSTAUDIOQUEUE
     };
-
     enum MediaType
     {
         MEDIA_UNKNOWN = -1,
@@ -86,19 +81,14 @@ namespace rdk_gstreamer_utils {
      *      ec-3.A2 or ec-3.A6
      */
     std::string mCodecParam;
-
     /** Number of channels */
     uint32_t mNumberOfChannels;
-
     /** Sampling frequency */
     uint32_t mSamplesPerSecond;
-
     /** Bit rate */
     uint32_t mBitrate;
-
     /** Block Align */
     uint32_t mBlockAlignment;
-
     /**
      * Byte array of configuration data for the video encoding.  The format of
      * the data is codec-specific. For HE-AAC, the data mCodecSpecificData is
@@ -108,29 +98,22 @@ namespace rdk_gstreamer_utils {
     const uint8_t *mCodecSpecificData;
     uint32_t mCodecSpecificDataLen;
     };
-
     inline unsigned getGstPlayFlag(const char* nick)
     {
         static GFlagsClass* flagsClass = static_cast<GFlagsClass*>(g_type_class_ref(g_type_from_name("GstPlayFlags")));
-
         GFlagsValue* flag = g_flags_get_value_by_nick(flagsClass, nick);
         if (!flag)
             return 0;
-
         return flag->value;
     }
-
     bool installUnderflowCallbackFromPlatform(GstElement *pipeline,
         GCallback underflowVideoCallback,
         GCallback underflowAudioCallback,
         gpointer data);
-
     void initVirtualDisplayHeightandWidthFromPlatform(unsigned int* mVirtualDisplayHeight, unsigned int* mVirtualDisplayWidth);
-
     bool IntialVolSettingNeeded();
     bool isSocAudioFadeSupported();
     void doAudioEasingonSoc(double target, uint32_t duration, rgu_Ease ease);
-
     bool isPtsOffsetAdjustmentSupported();
     int getPtsOffsetAdjustment(const std::string& audioCodecString);
     void setVideoProperty(GstElement *pipeline);
@@ -140,10 +123,12 @@ namespace rdk_gstreamer_utils {
     bool isUIAudioVGAudioMixSupported();
     std::map<rgu_gstelement,GstElement *> createNewAudioElements(bool isAudioAAC,bool createqueue);
     unsigned getNativeAudioFlag();
-    void configAudioCap(AudioAttributes *pAttrib, bool *audioaac, bool svpenabled, GstCaps **appsrcCaps);
+    /* configAudioCap interface extended with passthroughProperty for NF7 */
+    void configAudioCap(AudioAttributes *pAttrib, bool *audioaac, bool svpenabled, GstCaps **appsrcCaps, bool passthroughProperty=true);
+    /* performAudioTrackCodecChannelSwitch interface extended with passthroughProperty for NF7 */
     bool performAudioTrackCodecChannelSwitch(struct rdkGstreamerUtilsPlaybackGrp *pgstUtilsPlaybackGroup, const void *pSampleAttr, AudioAttributes *pAudioAttr, uint32_t *pStatus, unsigned int *pui32Delay,
                                                  llong *pAudioChangeTargetPts, const llong *pcurrentDispPts, unsigned int *audio_change_stage, GstCaps **appsrcCaps,
-                                                 bool *audioaac, bool svpenabled, GstElement *aSrc, bool *ret);
+                                                 bool *audioaac, bool svpenabled, GstElement *aSrc, bool *ret, bool passthroughProperty=true);
     void setAppSrcParams(GstElement *aSrc,MediaType mediatype);
     void setPixelAspectRatio(GstCaps ** ppCaps,GstCaps *appsrcCaps,uint32_t pixelAspectRatioX,uint32_t pixelAspectRatioY);
     void deepElementAdded(struct rdkGstreamerUtilsPlaybackGrp *pgstUtilsPlaybackGroup, GstBin* pipeline, GstBin* bin, GstElement* element);
@@ -158,5 +143,6 @@ namespace rdk_gstreamer_utils {
     void setKeyFrameFlag(GstBuffer *gstBuffer,bool val);
     bool getDelayTimerEnabled();
     void SetAudioServerParam(bool enabled);
+    void constructLLAudioPlayer(int numChannel ,GstElement *gstPipeline ,GstElement *aSrc,GstElement *aSink,GstElement *aFilter,GstElement *aDecoder);
 } // namespace rdk_gstreamer_utils
 #endif /* __RDK_GSTREAMER_UTILS_H___ */
