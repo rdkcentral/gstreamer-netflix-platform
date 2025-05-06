@@ -26,6 +26,16 @@
 #include <string.h>
 #include <map>
 #include <string>
+#include <locale>
+#include <thread>
+#include <iostream>
+
+#ifndef PLAYREADY_INCLUDES_H_
+#include <drmmanager.h>  // playready top-level API
+#include <drmconstants.h>
+#include <drmbytemanip.h>
+#include <drmversionconstants.h>
+#endif /* PLAYREADY_INCLUDES_H_ */
 
 namespace rdk_gstreamer_utils {
 
@@ -158,5 +168,18 @@ namespace rdk_gstreamer_utils {
     void setKeyFrameFlag(GstBuffer *gstBuffer,bool val);
     bool getDelayTimerEnabled();
     void SetAudioServerParam(bool enabled);
+
+// =========================================== DRM APIs ================================================
+    typedef void (*max_resolution_update_cb)(const unsigned char *databuffer, size_t len, const DRM_VOID *f_pv);
+
+    DRM_RESULT Drmhal_Platform_Initialize(std::string DrmStorePath);
+
+    uint32_t Drmhal_DeleteDrmStore(DRM_CONST_STRING mDrmStore, std::string DrmStorePath);
+
+    bool Drmhal_bindCallbackPrecheck(const DRM_VOID *f_pvCallbackData, DRM_POLICY_CALLBACK_TYPE  f_dwCallbackType,
+                                           const DRM_KID *f_pKID, const DRM_LID *f_pLID, const DRM_VOID *f_pv);
+    DRM_RESULT Drmhal_FetchOuptutProtectionConfigData(const DRM_VOID *f_pvCallbackData, DRM_POLICY_CALLBACK_TYPE  f_dwCallbackType,
+                                                       const DRM_KID *f_pKID, const DRM_LID *f_pLID, const DRM_VOID *f_pv, max_resolution_update_cb cb);
+// =========================================== DRM APIs ================================================
 } // namespace rdk_gstreamer_utils
 #endif /* __RDK_GSTREAMER_UTILS_H___ */
