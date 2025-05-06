@@ -242,6 +242,11 @@ namespace rdk_gstreamer_utils {
         return Drmhal_DeleteDrmStore_soc(mDrmStore,DrmStorePath);
     }
 
+    bool Drmhal_QueryBatchIDFromLicenseRespone(DRM_LICENSE_RESPONSE *pstdrmLicenseResponse, DRM_ID *pstDRMBatchID)
+    {
+        return Drmhal_QueryBatchIDFromLicenseRespone_soc(pstdrmLicenseResponse, pstDRMBatchID);
+    }
+
     bool Drmhal_bindCallbackPrecheck(const DRM_VOID *f_pvCallbackData, DRM_POLICY_CALLBACK_TYPE  f_dwCallbackType,
                                             const DRM_KID *f_pKID, const DRM_LID *f_pLID, const DRM_VOID *f_pv)
     {
