@@ -163,6 +163,8 @@ namespace rdk_gstreamer_utils {
 
     uint32_t Drmhal_DeleteDrmStore(DRM_CONST_STRING mDrmStore, std::string DrmStorePath);
 
+    bool Drmhal_QueryBatchIDFromLicenseRespone(DRM_LICENSE_RESPONSE *pstdrmLicenseResponse, DRM_ID *pstDRMBatchID);
+
     bool Drmhal_bindCallbackPrecheck(const DRM_VOID *f_pvCallbackData, DRM_POLICY_CALLBACK_TYPE  f_dwCallbackType,
                                            const DRM_KID *f_pKID, const DRM_LID *f_pLID, const DRM_VOID *f_pv);
     DRM_RESULT Drmhal_FetchOuptutProtectionConfigData(const DRM_VOID *f_pvCallbackData, DRM_POLICY_CALLBACK_TYPE  f_dwCallbackType,
