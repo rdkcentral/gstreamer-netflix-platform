@@ -237,4 +237,28 @@ namespace rdk_gstreamer_utils {
         constructLLAudioPlayer_soc(numChannel,gstPipeline ,aSrc,aSink,aFilter,aDecoder);
     }
 
+// =========================================== DRM APIs ================================================
+    DRM_RESULT Drmhal_Platform_Initialize( std::string DrmStorePath )
+    {
+        return Drmhal_Platform_Initialize_soc(DrmStorePath);
+    }
+
+    uint32_t Drmhal_DeleteDrmStore(DRM_CONST_STRING mDrmStore, std::string DrmStorePath)
+    {
+        return Drmhal_DeleteDrmStore_soc(mDrmStore,DrmStorePath);
+    }
+
+    bool Drmhal_bindCallbackPrecheck(const DRM_VOID *f_pvCallbackData, DRM_POLICY_CALLBACK_TYPE  f_dwCallbackType,
+                                            const DRM_KID *f_pKID, const DRM_LID *f_pLID, const DRM_VOID *f_pv)
+    {
+        return Drmhal_bindCallbackPrecheck_soc (f_pvCallbackData, f_dwCallbackType, f_pKID, f_pLID, f_pv);
+    }
+
+    DRM_RESULT Drmhal_FetchOuptutProtectionConfigData(const DRM_VOID *f_pvCallbackData, DRM_POLICY_CALLBACK_TYPE  f_dwCallbackType,
+                                    const DRM_KID *f_pKID, const DRM_LID *f_pLID, const DRM_VOID *f_pv, max_resolution_update_cb cb)
+    {
+        return Drmhal_FetchOuptutProtectionConfigData_soc(f_pvCallbackData, f_dwCallbackType, f_pKID, f_pLID, f_pv, cb);
+    }
+// =========================================== DRM abstract APIs ================================================
+    
 } // namespace rdk_gstreamer_utils

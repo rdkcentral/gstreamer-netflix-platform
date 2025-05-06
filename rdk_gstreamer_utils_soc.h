@@ -56,3 +56,20 @@ namespace rdk_gstreamer_utils
     void SetAudioServerParam_soc(bool enabled);
     void constructLLAudioPlayer_soc(int numChannel ,GstElement *gstPipeline ,GstElement *aSrc,GstElement *aSink,GstElement *aFilter,GstElement *aDecoder);
 } //namespace rdk_gstreamer_utils
+
+// =========================================== DRM APIs ================================================
+
+    typedef void (*max_resolution_update_cb)(const unsigned char *databuffer, size_t len, const DRM_VOID *f_pv);
+
+    DRM_RESULT Drmhal_Platform_Initialize_soc( std::string DrmStorePath );
+
+    uint32_t Drmhal_DeleteDrmStore_soc(DRM_CONST_STRING mDrmStore, std::string DrmStorePath);
+
+    bool Drmhal_bindCallbackPrecheck_soc(const DRM_VOID *f_pvCallbackData, DRM_POLICY_CALLBACK_TYPE  f_dwCallbackType,
+                                                const DRM_KID *f_pKID, const DRM_LID *f_pLID, const DRM_VOID *f_pv);
+
+    DRM_RESULT Drmhal_FetchOuptutProtectionConfigData_soc(const DRM_VOID *f_pvCallbackData, DRM_POLICY_CALLBACK_TYPE  f_dwCallbackType,
+                                                const DRM_KID *f_pKID, const DRM_LID *f_pLID, const DRM_VOID *f_pv, max_resolution_update_cb cb);
+
+// =========================================== DRM APIs ================================================
+} //namespace rdk_gstreamer_utils
