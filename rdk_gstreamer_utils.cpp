@@ -231,12 +231,15 @@ namespace rdk_gstreamer_utils {
     {
        SetAudioServerParam_soc(enabled);
     }
+<<<<<<< HEAD
 
     void constructLLAudioPlayer(int numChannel ,GstElement *gstPipeline ,GstElement *aSrc,GstElement *aSink,GstElement *aFilter,GstElement *aDecoder)
     {
         constructLLAudioPlayer_soc(numChannel,gstPipeline ,aSrc,aSink,aFilter,aDecoder);
     }
 
+=======
+>>>>>>> 5ba3d89b9e1098ea625ad82a1e42fec0b18ee7c9
 // =========================================== DRM APIs ================================================
     DRM_RESULT Drmhal_Platform_Initialize( std::string DrmStorePath )
     {

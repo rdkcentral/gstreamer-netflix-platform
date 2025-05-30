@@ -28,6 +28,16 @@
 #include <locale>
 #include <thread>
 #include <iostream>
+<<<<<<< HEAD
+=======
+
+#ifndef PLAYREADY_INCLUDES_H_
+#include <drmmanager.h>  // playready top-level API
+#include <drmconstants.h>
+#include <drmbytemanip.h>
+#include <drmversionconstants.h>
+#endif /* PLAYREADY_INCLUDES_H_ */
+>>>>>>> 5ba3d89b9e1098ea625ad82a1e42fec0b18ee7c9
 
 #ifndef PLAYREADY_INCLUDES_H_
 #include <drmmanager.h>  // playready top-level API
@@ -154,7 +164,10 @@ namespace rdk_gstreamer_utils {
     void setKeyFrameFlag(GstBuffer *gstBuffer,bool val);
     bool getDelayTimerEnabled();
     void SetAudioServerParam(bool enabled);
+<<<<<<< HEAD
     void constructLLAudioPlayer(int numChannel ,GstElement *gstPipeline ,GstElement *aSrc,GstElement *aSink,GstElement *aFilter,GstElement *aDecoder);
+=======
+>>>>>>> 5ba3d89b9e1098ea625ad82a1e42fec0b18ee7c9
 
 // =========================================== DRM APIs ================================================
     typedef void (*max_resolution_update_cb)(const unsigned char *databuffer, size_t len, const DRM_VOID *f_pv);

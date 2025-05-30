@@ -54,8 +54,11 @@ namespace rdk_gstreamer_utils
     void setKeyFrameFlag_soc(GstBuffer *gstBuffer,bool val);
     bool getDelayTimerEnabled_soc();
     void SetAudioServerParam_soc(bool enabled);
+<<<<<<< HEAD
     void constructLLAudioPlayer_soc(int numChannel ,GstElement *gstPipeline ,GstElement *aSrc,GstElement *aSink,GstElement *aFilter,GstElement *aDecoder);
 } //namespace rdk_gstreamer_utils
+=======
+>>>>>>> 5ba3d89b9e1098ea625ad82a1e42fec0b18ee7c9
 
 // =========================================== DRM APIs ================================================
 

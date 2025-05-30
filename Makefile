@@ -19,7 +19,11 @@
 
 
 EXTRA_CXXFLAGS = -Wno-attributes -Wall -g -fpermissive -std=c++1y -fPIC
+<<<<<<< HEAD
 EXTRA_LDFLAGS = -lgstreamer-1.0 -lglib-2.0 -Wl,-rpath=../../,-rpath=./ -lrdkgstreamerutilsplatform
+=======
+EXTRA_LDFLAGS = -lgstreamer-1.0 -lglib-2.0 -Wl,-rpath=../../,-rpath=./
+>>>>>>> 5ba3d89b9e1098ea625ad82a1e42fec0b18ee7c9
 
 SOURCES = rdk_gstreamer_utils.cpp
 
