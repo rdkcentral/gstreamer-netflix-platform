@@ -55,7 +55,6 @@ namespace rdk_gstreamer_utils
     bool getDelayTimerEnabled_soc();
     void SetAudioServerParam_soc(bool enabled);
     void constructLLAudioPlayer_soc(int numChannel ,GstElement *gstPipeline ,GstElement *aSrc,GstElement *aSink,GstElement *aFilter,GstElement *aDecoder);
-} //namespace rdk_gstreamer_utils
 
 // =========================================== DRM APIs ================================================
 
