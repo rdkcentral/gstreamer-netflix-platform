@@ -66,11 +66,13 @@ namespace rdk_gstreamer_utils
 
     bool Drmhal_QueryBatchIDFromLicenseRespone_soc(DRM_LICENSE_RESPONSE *pstdrmLicenseResponse, DRM_ID *pstDRMBatchID);
 
-    bool Drmhal_bindCallbackPrecheck_soc(const DRM_VOID *f_pvCallbackData, DRM_POLICY_CALLBACK_TYPE  f_dwCallbackType,
-                                                const DRM_KID *f_pKID, const DRM_LID *f_pLID, const DRM_VOID *f_pv);
+    bool Drmhal_bindCallbackPrecheck_soc( DRM_POLICY_CALLBACK_TYPE  f_dwCallbackType );
 
     DRM_RESULT Drmhal_FetchOuptutProtectionConfigData_soc(const DRM_VOID *f_pvCallbackData, DRM_POLICY_CALLBACK_TYPE  f_dwCallbackType,
                                                 const DRM_KID *f_pKID, const DRM_LID *f_pLID, const DRM_VOID *f_pv, max_resolution_update_cb cb);
+
+    DRM_RESULT Drmhal_PreDecrypt_soc(void * mDecryptContext, void * mSVPContext, bool mPreallocMemoryForDecrypt,
+                                        DRM_DWORD f_cbEncryptedContent, void ** header, void * securehandle, int securehandleSz);
 
 // =========================================== DRM APIs ================================================
 } //namespace rdk_gstreamer_utils
