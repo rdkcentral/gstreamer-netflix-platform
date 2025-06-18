@@ -253,16 +253,21 @@ namespace rdk_gstreamer_utils {
         return Drmhal_QueryBatchIDFromLicenseRespone_soc(pstdrmLicenseResponse, pstDRMBatchID);
     }
 
-    bool Drmhal_bindCallbackPrecheck(const DRM_VOID *f_pvCallbackData, DRM_POLICY_CALLBACK_TYPE  f_dwCallbackType,
-                                            const DRM_KID *f_pKID, const DRM_LID *f_pLID, const DRM_VOID *f_pv)
+    bool Drmhal_bindCallbackPrecheck( DRM_POLICY_CALLBACK_TYPE  f_dwCallbackType )
     {
-        return Drmhal_bindCallbackPrecheck_soc (f_pvCallbackData, f_dwCallbackType, f_pKID, f_pLID, f_pv);
+        return Drmhal_bindCallbackPrecheck_soc (f_dwCallbackType);
     }
 
     DRM_RESULT Drmhal_FetchOuptutProtectionConfigData(const DRM_VOID *f_pvCallbackData, DRM_POLICY_CALLBACK_TYPE  f_dwCallbackType,
                                     const DRM_KID *f_pKID, const DRM_LID *f_pLID, const DRM_VOID *f_pv, max_resolution_update_cb cb)
     {
         return Drmhal_FetchOuptutProtectionConfigData_soc(f_pvCallbackData, f_dwCallbackType, f_pKID, f_pLID, f_pv, cb);
+    }
+
+    DRM_RESULT Drmhal_PreDecrypt(void * mDecryptContext, void * mSVPContext, bool mPreallocMemoryForDecrypt,
+                                        DRM_DWORD f_cbEncryptedContent, void ** header, void * securehandle, int securehandleSz)
+    {
+        return Drmhal_PreDecrypt_soc(mDecryptContext, mSVPContext, mPreallocMemoryForDecrypt, f_cbEncryptedContent, header, securehandle, securehandleSz);
     }
 // =========================================== DRM abstract APIs ================================================
     
