@@ -23,7 +23,7 @@
 #include <gst/gst.h>
 #include <glib.h>
 #include <string.h>
-
+#include <dlfcn.h>
 
 using namespace std;
 
