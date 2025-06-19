@@ -29,20 +29,6 @@
 #include <thread>
 #include <iostream>
 
-#ifndef PLAYREADY_INCLUDES_H_
-#include <drmmanager.h>  // playready top-level API
-#include <drmconstants.h>
-#include <drmbytemanip.h>
-#include <drmversionconstants.h>
-#endif /* PLAYREADY_INCLUDES_H_ */
-
-#ifndef PLAYREADY_INCLUDES_H_
-#include <drmmanager.h>  // playready top-level API
-#include <drmconstants.h>
-#include <drmbytemanip.h>
-#include <drmversionconstants.h>
-#endif /* PLAYREADY_INCLUDES_H_ */
-
 namespace rdk_gstreamer_utils {
     #define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
     #define LOG_RGU(fmt, ...) do { fprintf(stderr, "[RGU:%s:%d]: " fmt "\n", __FILENAME__, __LINE__, ##__VA_ARGS__); fflush(stderr); } while (0)
@@ -164,21 +150,21 @@ namespace rdk_gstreamer_utils {
     void constructLLAudioPlayer(int numChannel ,GstElement *gstPipeline ,GstElement *aSrc,GstElement *aSink,GstElement *aFilter,GstElement *aDecoder);
 
 // =========================================== DRM APIs ================================================
-    typedef void (*max_resolution_update_cb)(const unsigned char *databuffer, size_t len, const DRM_VOID *f_pv);
+    typedef void (*max_resolution_update_cb)(const unsigned char *databuffer, size_t len, const void *f_pv);
 
-    DRM_RESULT Drmhal_Platform_Initialize(std::string DrmStorePath);
+    int32_t Drmhal_Platform_Initialize( std::string DrmStorePath );
 
-    uint32_t Drmhal_DeleteDrmStore(DRM_CONST_STRING mDrmStore, std::string DrmStorePath);
+    uint32_t Drmhal_DeleteDrmStore(void* mDrmStore, std::string DrmStorePath);
 
-    bool Drmhal_QueryBatchIDFromLicenseRespone(DRM_LICENSE_RESPONSE *pstdrmLicenseResponse, DRM_ID *pstDRMBatchID);
+    bool Drmhal_QueryBatchIDFromLicenseRespone(void *pstdrmLicenseResponse, void *pstDRMBatchID);
 
-    bool Drmhal_bindCallbackPrecheck( DRM_POLICY_CALLBACK_TYPE  f_dwCallbackType );
+    bool Drmhal_bindCallbackPrecheck(int f_dwCallbackType);
 
-    DRM_RESULT Drmhal_FetchOuptutProtectionConfigData(const DRM_VOID *f_pvCallbackData, DRM_POLICY_CALLBACK_TYPE  f_dwCallbackType,
-                                                       const DRM_KID *f_pKID, const DRM_LID *f_pLID, const DRM_VOID *f_pv, max_resolution_update_cb cb);
+    int32_t Drmhal_FetchOuptutProtectionConfigData(const void *f_pvCallbackData, int  f_dwCallbackType,
+                                const void *f_pKID, const void *f_pLID, const void *f_pv, max_resolution_update_cb cb);
 
-    DRM_RESULT Drmhal_PreDecrypt(void * mDecryptContext, void * mSVPContext, bool mPreallocMemoryForDecrypt,
-                                        DRM_DWORD f_cbEncryptedContent, void ** header, void * securehandle, int securehandleSz);
+    int32_t Drmhal_PreDecrypt(void * mDecryptContext, void * mSVPContext, bool mPreallocMemoryForDecrypt,
+                                    int f_cbEncryptedContent, void ** header, void * securehandle, int securehandleSz);
 // =========================================== DRM APIs ================================================
 } // namespace rdk_gstreamer_utils
 #endif /* __RDK_GSTREAMER_UTILS_H___ */

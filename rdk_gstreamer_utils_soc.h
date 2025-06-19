@@ -58,21 +58,21 @@ namespace rdk_gstreamer_utils
 
 // =========================================== DRM APIs ================================================
 
-    typedef void (*max_resolution_update_cb)(const unsigned char *databuffer, size_t len, const DRM_VOID *f_pv);
+    typedef void (*max_resolution_update_cb)(const unsigned char *databuffer, size_t len, const void *f_pv);
 
-    DRM_RESULT Drmhal_Platform_Initialize_soc( std::string DrmStorePath );
+    int32_t Drmhal_Platform_Initialize_soc( std::string DrmStorePath );
 
-    uint32_t Drmhal_DeleteDrmStore_soc(DRM_CONST_STRING mDrmStore, std::string DrmStorePath);
+    uint32_t Drmhal_DeleteDrmStore_soc(void* mDrmStore, std::string DrmStorePath);
 
-    bool Drmhal_QueryBatchIDFromLicenseRespone_soc(DRM_LICENSE_RESPONSE *pstdrmLicenseResponse, DRM_ID *pstDRMBatchID);
+    bool Drmhal_QueryBatchIDFromLicenseRespone_soc(void *pstdrmLicenseResponse, void *pstDRMBatchID);
 
-    bool Drmhal_bindCallbackPrecheck_soc( DRM_POLICY_CALLBACK_TYPE  f_dwCallbackType );
+    bool Drmhal_bindCallbackPrecheck_soc(int f_dwCallbackType);
 
-    DRM_RESULT Drmhal_FetchOuptutProtectionConfigData_soc(const DRM_VOID *f_pvCallbackData, DRM_POLICY_CALLBACK_TYPE  f_dwCallbackType,
-                                                const DRM_KID *f_pKID, const DRM_LID *f_pLID, const DRM_VOID *f_pv, max_resolution_update_cb cb);
+    int32_t Drmhal_FetchOuptutProtectionConfigData_soc(const void *f_pvCallbackData, int  f_dwCallbackType,
+                                    const void *f_pKID, const void *f_pLID, const void *f_pv, max_resolution_update_cb cb);
 
-    DRM_RESULT Drmhal_PreDecrypt_soc(void * mDecryptContext, void * mSVPContext, bool mPreallocMemoryForDecrypt,
-                                        DRM_DWORD f_cbEncryptedContent, void ** header, void * securehandle, int securehandleSz);
+    int32_t Drmhal_PreDecrypt_soc(void * mDecryptContext, void * mSVPContext, bool mPreallocMemoryForDecrypt,
+                                        int f_cbEncryptedContent, void ** header, void * securehandle, int securehandleSz);
 
 // =========================================== DRM APIs ================================================
 } //namespace rdk_gstreamer_utils

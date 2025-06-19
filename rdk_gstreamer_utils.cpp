@@ -238,34 +238,34 @@ namespace rdk_gstreamer_utils {
     }
 
 // =========================================== DRM APIs ================================================
-    DRM_RESULT Drmhal_Platform_Initialize( std::string DrmStorePath )
+    int32_t Drmhal_Platform_Initialize( std::string DrmStorePath )
     {
         return Drmhal_Platform_Initialize_soc(DrmStorePath);
     }
 
-    uint32_t Drmhal_DeleteDrmStore(DRM_CONST_STRING mDrmStore, std::string DrmStorePath)
+    uint32_t Drmhal_DeleteDrmStore(void* mDrmStore, std::string DrmStorePath)
     {
         return Drmhal_DeleteDrmStore_soc(mDrmStore,DrmStorePath);
     }
 
-    bool Drmhal_QueryBatchIDFromLicenseRespone(DRM_LICENSE_RESPONSE *pstdrmLicenseResponse, DRM_ID *pstDRMBatchID)
+    bool Drmhal_QueryBatchIDFromLicenseRespone(void *pstdrmLicenseResponse, void *pstDRMBatchID)
     {
         return Drmhal_QueryBatchIDFromLicenseRespone_soc(pstdrmLicenseResponse, pstDRMBatchID);
     }
 
-    bool Drmhal_bindCallbackPrecheck( DRM_POLICY_CALLBACK_TYPE  f_dwCallbackType )
+    bool Drmhal_bindCallbackPrecheck(int f_dwCallbackType)
     {
         return Drmhal_bindCallbackPrecheck_soc (f_dwCallbackType);
     }
 
-    DRM_RESULT Drmhal_FetchOuptutProtectionConfigData(const DRM_VOID *f_pvCallbackData, DRM_POLICY_CALLBACK_TYPE  f_dwCallbackType,
-                                    const DRM_KID *f_pKID, const DRM_LID *f_pLID, const DRM_VOID *f_pv, max_resolution_update_cb cb)
+    int32_t Drmhal_FetchOuptutProtectionConfigData(const void *f_pvCallbackData, int  f_dwCallbackType,
+                                    const void *f_pKID, const void *f_pLID, const void *f_pv, max_resolution_update_cb cb)
     {
         return Drmhal_FetchOuptutProtectionConfigData_soc(f_pvCallbackData, f_dwCallbackType, f_pKID, f_pLID, f_pv, cb);
     }
 
-    DRM_RESULT Drmhal_PreDecrypt(void * mDecryptContext, void * mSVPContext, bool mPreallocMemoryForDecrypt,
-                                        DRM_DWORD f_cbEncryptedContent, void ** header, void * securehandle, int securehandleSz)
+    int32_t Drmhal_PreDecrypt(void * mDecryptContext, void * mSVPContext, bool mPreallocMemoryForDecrypt,
+                                        int f_cbEncryptedContent, void ** header, void * securehandle, int securehandleSz)
     {
         return Drmhal_PreDecrypt_soc(mDecryptContext, mSVPContext, mPreallocMemoryForDecrypt, f_cbEncryptedContent, header, securehandle, securehandleSz);
     }
