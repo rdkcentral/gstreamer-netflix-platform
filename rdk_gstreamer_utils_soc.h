@@ -55,4 +55,24 @@ namespace rdk_gstreamer_utils
     bool getDelayTimerEnabled_soc();
     void SetAudioServerParam_soc(bool enabled);
     void constructLLAudioPlayer_soc(int numChannel ,GstElement *gstPipeline ,GstElement *aSrc,GstElement *aSink,GstElement *aFilter,GstElement *aDecoder);
+
+// =========================================== DRM APIs ================================================
+
+    typedef void (*max_resolution_update_cb)(const unsigned char *databuffer, size_t len, const void *f_pv);
+
+    int32_t Drmhal_Platform_Initialize_soc( std::string DrmStorePath );
+
+    uint32_t Drmhal_DeleteDrmStore_soc(void* mDrmStore, std::string DrmStorePath);
+
+    bool Drmhal_QueryBatchIDFromLicenseRespone_soc(void *pstdrmLicenseResponse, void *pstDRMBatchID);
+
+    bool Drmhal_bindCallbackPrecheck_soc(int f_dwCallbackType);
+
+    int32_t Drmhal_FetchOuptutProtectionConfigData_soc(const void *f_pvCallbackData, int  f_dwCallbackType,
+                                    const void *f_pKID, const void *f_pLID, const void *f_pv, max_resolution_update_cb cb);
+
+    int32_t Drmhal_PreDecrypt_soc(void * mDecryptContext, void * mSVPContext, bool mPreallocMemoryForDecrypt,
+                                        int f_cbEncryptedContent, void ** header, void * securehandle, int securehandleSz);
+
+// =========================================== DRM APIs ================================================
 } //namespace rdk_gstreamer_utils
