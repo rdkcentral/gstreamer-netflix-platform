@@ -238,17 +238,22 @@ namespace rdk_gstreamer_utils {
     }
 
 // =========================================== DRM APIs ================================================
+    static void* handle = nullptr;
+    #define RDK_GSTREAMER_UTILS_LIBRARY_NAME "/usr/lib/librdkgstreamerutilsplatform.so"
+
     int32_t Drmhal_Platform_Initialize(std::string DrmStorePath)
     {
         typedef int32_t (*Drmhal_Platform_Initialize_soc_Func)(std::string);
         static Drmhal_Platform_Initialize_soc_Func func = nullptr;
-        if (!func) {
-            func = (Drmhal_Platform_Initialize_soc_Func)dlsym(RTLD_DEFAULT, "Drmhal_Platform_Initialize_soc");
+        if (!handle) {
+            handle = dlopen(RDK_GSTREAMER_UTILS_LIBRARY_NAME, RTLD_LAZY);
+        }
+        if (handle && !func) {
+            func = (Drmhal_Platform_Initialize_soc_Func)dlsym(handle, "Drmhal_Platform_Initialize_soc");
         }
         if (func) {
             return func(DrmStorePath);
         } else {
-            // Handle error: symbol not found
             printf("Drmhal_Platform_Initialize_soc symbol not found via dlsym\n");
             return -1;
         }
@@ -258,8 +263,11 @@ namespace rdk_gstreamer_utils {
     {
         typedef uint32_t (*Drmhal_DeleteDrmStore_soc_Func)(void*, std::string);
         static Drmhal_DeleteDrmStore_soc_Func func = nullptr;
-        if (!func) {
-            func = (Drmhal_DeleteDrmStore_soc_Func)dlsym(RTLD_DEFAULT, "Drmhal_DeleteDrmStore_soc");
+        if (!handle) {
+            handle = dlopen(RDK_GSTREAMER_UTILS_LIBRARY_NAME, RTLD_LAZY);
+        }
+        if (handle && !func) {
+            func = (Drmhal_DeleteDrmStore_soc_Func)dlsym(handle, "Drmhal_DeleteDrmStore_soc");
         }
         if (func) {
             return func(mDrmStore, DrmStorePath);
@@ -273,8 +281,11 @@ namespace rdk_gstreamer_utils {
     {
         typedef bool (*Drmhal_QueryBatchIDFromLicenseRespone_soc_Func)(void*, void*);
         static Drmhal_QueryBatchIDFromLicenseRespone_soc_Func func = nullptr;
-        if (!func) {
-            func = (Drmhal_QueryBatchIDFromLicenseRespone_soc_Func)dlsym(RTLD_DEFAULT, "Drmhal_QueryBatchIDFromLicenseRespone_soc");
+        if (!handle) {
+            handle = dlopen(RDK_GSTREAMER_UTILS_LIBRARY_NAME, RTLD_LAZY);
+        }
+        if (handle && !func) {
+            func = (Drmhal_QueryBatchIDFromLicenseRespone_soc_Func)dlsym(handle, "Drmhal_QueryBatchIDFromLicenseRespone_soc");
         }
         if (func) {
             return func(pstdrmLicenseResponse, pstDRMBatchID);
@@ -288,8 +299,11 @@ namespace rdk_gstreamer_utils {
     {
         typedef bool (*Drmhal_bindCallbackPrecheck_soc_Func)(int);
         static Drmhal_bindCallbackPrecheck_soc_Func func = nullptr;
-        if (!func) {
-            func = (Drmhal_bindCallbackPrecheck_soc_Func)dlsym(RTLD_DEFAULT, "Drmhal_bindCallbackPrecheck_soc");
+        if (!handle) {
+            handle = dlopen(RDK_GSTREAMER_UTILS_LIBRARY_NAME, RTLD_LAZY);
+        }
+        if (handle && !func) {
+            func = (Drmhal_bindCallbackPrecheck_soc_Func)dlsym(handle, "Drmhal_bindCallbackPrecheck_soc");
         }
         if (func) {
             return func(f_dwCallbackType);
@@ -304,8 +318,11 @@ namespace rdk_gstreamer_utils {
     {
         typedef int32_t (*Drmhal_FetchOuptutProtectionConfigData_soc_Func)(const void*, int, const void*, const void*, const void*, max_resolution_update_cb);
         static Drmhal_FetchOuptutProtectionConfigData_soc_Func func = nullptr;
-        if (!func) {
-            func = (Drmhal_FetchOuptutProtectionConfigData_soc_Func)dlsym(RTLD_DEFAULT, "Drmhal_FetchOuptutProtectionConfigData_soc");
+        if (!handle) {
+            handle = dlopen(RDK_GSTREAMER_UTILS_LIBRARY_NAME, RTLD_LAZY);
+        }
+        if (handle && !func) {
+            func = (Drmhal_FetchOuptutProtectionConfigData_soc_Func)dlsym(handle, "Drmhal_FetchOuptutProtectionConfigData_soc");
         }
         if (func) {
             return func(f_pvCallbackData, f_dwCallbackType, f_pKID, f_pLID, f_pv, cb);
@@ -320,8 +337,11 @@ namespace rdk_gstreamer_utils {
     {
         typedef int32_t (*Drmhal_PreDecrypt_soc_Func)(void*, void*, bool, int, void**, void*, int);
         static Drmhal_PreDecrypt_soc_Func func = nullptr;
-        if (!func) {
-            func = (Drmhal_PreDecrypt_soc_Func)dlsym(RTLD_DEFAULT, "Drmhal_PreDecrypt_soc");
+        if (!handle) {
+            handle = dlopen(RDK_GSTREAMER_UTILS_LIBRARY_NAME, RTLD_LAZY);
+        }
+        if (handle && !func) {
+            func = (Drmhal_PreDecrypt_soc_Func)dlsym(handle, "Drmhal_PreDecrypt_soc");
         }
         if (func) {
             return func(mDecryptContext, mSVPContext, mPreallocMemoryForDecrypt, f_cbEncryptedContent, header, securehandle, securehandleSz);
@@ -329,6 +349,7 @@ namespace rdk_gstreamer_utils {
             printf("Drmhal_PreDecrypt_soc symbol not found via dlsym\n");            
             return -1;
         }
-    }// =========================================== DRM abstract APIs ================================================
+    }
+// =========================================== DRM abstract APIs ================================================
     
 } // namespace rdk_gstreamer_utils
