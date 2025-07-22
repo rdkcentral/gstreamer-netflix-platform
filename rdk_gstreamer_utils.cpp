@@ -271,10 +271,10 @@ namespace rdk_gstreamer_utils {
 
     bool Drmhal_QueryBatchIDFromLicenseResponse(void *pstdrmLicenseResponse, void *pstDRMBatchID)
     {
-        typedef bool (*Drmhal_QueryBatchIDFromLicenseRespone_soc_Func)(void*, void*);
+        typedef bool (*Drmhal_QueryBatchIDFromLicenseResponse_soc_Func)(void*, void*);
         static Drmhal_QueryBatchIDFromLicenseResponse_soc_Func func = nullptr;
         if (!func) {
-            func = (Drmhal_QueryBatchIDFromLicenseRespone_soc_Func)dlsym(RTLD_DEFAULT, "Drmhal_QueryBatchIDFromLicenseResponse_soc");
+            func = (Drmhal_QueryBatchIDFromLicenseResponse_soc_Func)dlsym(RTLD_DEFAULT, "Drmhal_QueryBatchIDFromLicenseResponse_soc");
         }
         if (func) {
             return func(pstdrmLicenseResponse, pstDRMBatchID);
@@ -302,10 +302,10 @@ namespace rdk_gstreamer_utils {
     int32_t Drmhal_FetchOutputProtectionConfigData(const void *f_pvCallbackData, int  f_dwCallbackType,
                                     const void *f_pKID, const void *f_pLID, const void *f_pv, max_resolution_update_cb cb)
     {
-        typedef int32_t (*Drmhal_FetchOuptutProtectionConfigData_soc_Func)(const void*, int, const void*, const void*, const void*, max_resolution_update_cb);
+        typedef int32_t (*Drmhal_FetchOutputProtectionConfigData_soc_Func)(const void*, int, const void*, const void*, const void*, max_resolution_update_cb);
         static Drmhal_FetchOutputProtectionConfigData_soc_Func func = nullptr;
         if (!func) {
-            func = (Drmhal_FetchOuptutProtectionConfigData_soc_Func)dlsym(RTLD_DEFAULT, "Drmhal_FetchOutputProtectionConfigData_soc");
+            func = (Drmhal_FetchOutputProtectionConfigData_soc_Func)dlsym(RTLD_DEFAULT, "Drmhal_FetchOutputProtectionConfigData_soc");
         }
         if (func) {
             return func(f_pvCallbackData, f_dwCallbackType, f_pKID, f_pLID, f_pv, cb);
