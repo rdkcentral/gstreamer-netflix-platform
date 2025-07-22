@@ -64,7 +64,7 @@ namespace rdk_gstreamer_utils
 
     uint32_t Drmhal_DeleteDrmStore_soc(void* mDrmStore, std::string DrmStorePath);
 
-    bool Drmhal_QueryBatchIDFromLicenseRespone_soc(void *pstdrmLicenseResponse, void *pstDRMBatchID);
+    bool Drmhal_QueryBatchIDFromLicenseResponse_soc(void *pstdrmLicenseResponse, void *pstDRMBatchID);
 
     bool Drmhal_bindCallbackPrecheck_soc(int f_dwCallbackType);
 
