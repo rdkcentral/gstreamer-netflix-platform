@@ -64,11 +64,11 @@ namespace rdk_gstreamer_utils
 
     uint32_t Drmhal_DeleteDrmStore_soc(void* mDrmStore, std::string DrmStorePath);
 
-    bool Drmhal_QueryBatchIDFromLicenseRespone_soc(void *pstdrmLicenseResponse, void *pstDRMBatchID);
+    bool Drmhal_QueryBatchIDFromLicenseResponse_soc(void *pstdrmLicenseResponse, void *pstDRMBatchID);
 
     bool Drmhal_bindCallbackPrecheck_soc(int f_dwCallbackType);
 
-    int32_t Drmhal_FetchOuptutProtectionConfigData_soc(const void *f_pvCallbackData, int  f_dwCallbackType,
+    int32_t Drmhal_FetchOutputProtectionConfigData_soc(const void *f_pvCallbackData, int  f_dwCallbackType,
                                     const void *f_pKID, const void *f_pLID, const void *f_pv, max_resolution_update_cb cb);
 
     int32_t Drmhal_PreDecrypt_soc(void * mDecryptContext, void * mSVPContext, bool mPreallocMemoryForDecrypt,
