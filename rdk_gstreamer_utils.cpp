@@ -239,17 +239,25 @@ namespace rdk_gstreamer_utils {
 
 // =========================================== DRM APIs ================================================
     static void* handle = nullptr;
-    #define RDK_GSTREAMER_UTILS_LIBRARY_NAME "/usr/lib/librdkgstreamerutilsplatform.so"
+    #define RDK_PR_DRM_UTILSLIBRARY_NAME "/usr/lib/libprdrmutils.so"
 
     int32_t Drmhal_Platform_Initialize(std::string DrmStorePath)
     {
         typedef int32_t (*Drmhal_Platform_Initialize_soc_Func)(std::string);
         static Drmhal_Platform_Initialize_soc_Func func = nullptr;
         if (!handle) {
-            handle = dlopen(RDK_GSTREAMER_UTILS_LIBRARY_NAME, RTLD_LAZY);
+            handle = dlopen(RDK_PR_DRM_UTILSLIBRARY_NAME, RTLD_LAZY | RTLD_GLOBAL);
+            if (!handle) {
+                printf("Error: dlopen failed for %s: %s\n", RDK_PR_DRM_UTILSLIBRARY_NAME, dlerror());
+                return -1;
+            }
         }
         if (handle && !func) {
             func = (Drmhal_Platform_Initialize_soc_Func)dlsym(handle, "Drmhal_Platform_Initialize_soc");
+            if (!func) {
+                printf("Error: dlsym failed for Drmhal_Platform_Initialize_soc: %s\n", dlerror());
+                return -1;
+            }
         }
         if (func) {
             return func(DrmStorePath);
@@ -264,33 +272,49 @@ namespace rdk_gstreamer_utils {
         typedef uint32_t (*Drmhal_DeleteDrmStore_soc_Func)(void*, std::string);
         static Drmhal_DeleteDrmStore_soc_Func func = nullptr;
         if (!handle) {
-            handle = dlopen(RDK_GSTREAMER_UTILS_LIBRARY_NAME, RTLD_LAZY);
+            handle = dlopen(RDK_PR_DRM_UTILSLIBRARY_NAME, RTLD_LAZY | RTLD_GLOBAL);
+            if (!handle) {
+                printf("Error: dlopen failed for %s: %s\n", RDK_PR_DRM_UTILSLIBRARY_NAME, dlerror());
+                return 0;
+            }
         }
         if (handle && !func) {
             func = (Drmhal_DeleteDrmStore_soc_Func)dlsym(handle, "Drmhal_DeleteDrmStore_soc");
+            if (!func) {
+                printf("Error: dlsym failed for Drmhal_DeleteDrmStore_soc: %s\n", dlerror());
+                return 0;
+            }
         }
         if (func) {
             return func(mDrmStore, DrmStorePath);
         } else {
-            printf("Drmhal_DeleteDrmStore_soc symbol not found via dlsym\n");
+            printf("Error: Drmhal_DeleteDrmStore_soc symbol not found via dlsym\n");
             return 0;
         }
     }
 
-    bool Drmhal_QueryBatchIDFromLicenseRespone(void *pstdrmLicenseResponse, void *pstDRMBatchID)
+    bool Drmhal_QueryBatchIDFromLicenseResponse(void *pstdrmLicenseResponse, void *pstDRMBatchID)
     {
-        typedef bool (*Drmhal_QueryBatchIDFromLicenseRespone_soc_Func)(void*, void*);
-        static Drmhal_QueryBatchIDFromLicenseRespone_soc_Func func = nullptr;
+        typedef bool (*Drmhal_QueryBatchIDFromLicenseResponse_soc_Func)(void*, void*);
+        static Drmhal_QueryBatchIDFromLicenseResponse_soc_Func func = nullptr;
         if (!handle) {
-            handle = dlopen(RDK_GSTREAMER_UTILS_LIBRARY_NAME, RTLD_LAZY);
+            handle = dlopen(RDK_PR_DRM_UTILSLIBRARY_NAME, RTLD_LAZY | RTLD_GLOBAL);
+            if (!handle) {
+                printf("Error: dlopen failed for %s: %s\n", RDK_PR_DRM_UTILSLIBRARY_NAME, dlerror());
+                return false;
+            }
         }
         if (handle && !func) {
-            func = (Drmhal_QueryBatchIDFromLicenseRespone_soc_Func)dlsym(handle, "Drmhal_QueryBatchIDFromLicenseRespone_soc");
+            func = (Drmhal_QueryBatchIDFromLicenseResponse_soc_Func)dlsym(handle, "Drmhal_QueryBatchIDFromLicenseResponse_soc");
+            if (!func) {
+                printf("Error: dlsym failed for Drmhal_QueryBatchIDFromLicenseResponse_soc: %s\n", dlerror());
+                return false;
+            }
         }
         if (func) {
             return func(pstdrmLicenseResponse, pstDRMBatchID);
         } else {
-            printf("Drmhal_QueryBatchIDFromLicenseRespone_soc symbol not found via dlsym\n");
+            printf("Error: Drmhal_QueryBatchIDFromLicenseResponse_soc symbol not found via dlsym\n");
             return false;
         }
     }
@@ -300,34 +324,50 @@ namespace rdk_gstreamer_utils {
         typedef bool (*Drmhal_bindCallbackPrecheck_soc_Func)(int);
         static Drmhal_bindCallbackPrecheck_soc_Func func = nullptr;
         if (!handle) {
-            handle = dlopen(RDK_GSTREAMER_UTILS_LIBRARY_NAME, RTLD_LAZY);
+            handle = dlopen(RDK_PR_DRM_UTILSLIBRARY_NAME, RTLD_LAZY | RTLD_GLOBAL);
+            if (!handle) {
+                printf("Error: dlopen failed for %s: %s\n", RDK_PR_DRM_UTILSLIBRARY_NAME, dlerror());
+                return false;
+            }
         }
         if (handle && !func) {
             func = (Drmhal_bindCallbackPrecheck_soc_Func)dlsym(handle, "Drmhal_bindCallbackPrecheck_soc");
+            if (!func) {
+                printf("Error: dlsym failed for Drmhal_bindCallbackPrecheck_soc: %s\n", dlerror());
+                return false;
+            }
         }
         if (func) {
             return func(f_dwCallbackType);
         } else {
-            printf("Drmhal_bindCallbackPrecheck_soc symbol not found via dlsym\n");
+            printf("Error: Drmhal_bindCallbackPrecheck_soc symbol not found via dlsym\n");
             return false;
         }
     }
 
-    int32_t Drmhal_FetchOuptutProtectionConfigData(const void *f_pvCallbackData, int  f_dwCallbackType,
+    int32_t Drmhal_FetchOutputProtectionConfigData(const void *f_pvCallbackData, int  f_dwCallbackType,
                                     const void *f_pKID, const void *f_pLID, const void *f_pv, max_resolution_update_cb cb)
     {
-        typedef int32_t (*Drmhal_FetchOuptutProtectionConfigData_soc_Func)(const void*, int, const void*, const void*, const void*, max_resolution_update_cb);
-        static Drmhal_FetchOuptutProtectionConfigData_soc_Func func = nullptr;
+        typedef int32_t (*Drmhal_FetchOutputProtectionConfigData_soc_Func)(const void*, int, const void*, const void*, const void*, max_resolution_update_cb);
+        static Drmhal_FetchOutputProtectionConfigData_soc_Func func = nullptr;
         if (!handle) {
-            handle = dlopen(RDK_GSTREAMER_UTILS_LIBRARY_NAME, RTLD_LAZY);
+            handle = dlopen(RDK_PR_DRM_UTILSLIBRARY_NAME, RTLD_LAZY | RTLD_GLOBAL);
+            if (!handle) {
+                printf("Error: dlopen failed for %s: %s\n", RDK_PR_DRM_UTILSLIBRARY_NAME, dlerror());
+                return -1;
+            }
         }
         if (handle && !func) {
-            func = (Drmhal_FetchOuptutProtectionConfigData_soc_Func)dlsym(handle, "Drmhal_FetchOuptutProtectionConfigData_soc");
+            func = (Drmhal_FetchOutputProtectionConfigData_soc_Func)dlsym(handle, "Drmhal_FetchOutputProtectionConfigData_soc");
+            if (!func) {
+                printf("Error: dlsym failed for Drmhal_FetchOutputProtectionConfigData_soc: %s\n", dlerror());
+                return -1;
+            }
         }
         if (func) {
             return func(f_pvCallbackData, f_dwCallbackType, f_pKID, f_pLID, f_pv, cb);
         } else {
-            printf("Drmhal_FetchOuptutProtectionConfigData_soc symbol not found via dlsym\n");
+            printf("Error: Drmhal_FetchOutputProtectionConfigData_soc symbol not found via dlsym\n");
             return -1;
         }
     }
@@ -338,15 +378,23 @@ namespace rdk_gstreamer_utils {
         typedef int32_t (*Drmhal_PreDecrypt_soc_Func)(void*, void*, bool, int, void**, void*, int);
         static Drmhal_PreDecrypt_soc_Func func = nullptr;
         if (!handle) {
-            handle = dlopen(RDK_GSTREAMER_UTILS_LIBRARY_NAME, RTLD_LAZY);
+            handle = dlopen(RDK_PR_DRM_UTILSLIBRARY_NAME, RTLD_LAZY | RTLD_GLOBAL);
+            if (!handle) {
+                printf("Error: dlopen failed for %s: %s\n", RDK_PR_DRM_UTILSLIBRARY_NAME, dlerror());
+                return -1;
+            }
         }
         if (handle && !func) {
             func = (Drmhal_PreDecrypt_soc_Func)dlsym(handle, "Drmhal_PreDecrypt_soc");
+            if (!func) {
+                printf("Error: dlsym failed for Drmhal_PreDecrypt_soc: %s\n", dlerror());
+                return -1;
+            }
         }
         if (func) {
             return func(mDecryptContext, mSVPContext, mPreallocMemoryForDecrypt, f_cbEncryptedContent, header, securehandle, securehandleSz);
         } else {
-            printf("Drmhal_PreDecrypt_soc symbol not found via dlsym\n");            
+            printf("Error: Drmhal_PreDecrypt_soc symbol not found via dlsym\n");
             return -1;
         }
     }
