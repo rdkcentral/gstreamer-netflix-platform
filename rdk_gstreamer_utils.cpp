@@ -269,17 +269,17 @@ namespace rdk_gstreamer_utils {
         }
     }
 
-    bool Drmhal_QueryBatchIDFromLicenseRespone(void *pstdrmLicenseResponse, void *pstDRMBatchID)
+    bool Drmhal_QueryBatchIDFromLicenseResponse(void *pstdrmLicenseResponse, void *pstDRMBatchID)
     {
-        typedef bool (*Drmhal_QueryBatchIDFromLicenseRespone_soc_Func)(void*, void*);
-        static Drmhal_QueryBatchIDFromLicenseRespone_soc_Func func = nullptr;
+        typedef bool (*Drmhal_QueryBatchIDFromLicenseResponse_soc_Func)(void*, void*);
+        static Drmhal_QueryBatchIDFromLicenseResponse_soc_Func func = nullptr;
         if (!func) {
-            func = (Drmhal_QueryBatchIDFromLicenseRespone_soc_Func)dlsym(RTLD_DEFAULT, "Drmhal_QueryBatchIDFromLicenseRespone_soc");
+            func = (Drmhal_QueryBatchIDFromLicenseResponse_soc_Func)dlsym(RTLD_DEFAULT, "Drmhal_QueryBatchIDFromLicenseResponse_soc");
         }
         if (func) {
             return func(pstdrmLicenseResponse, pstDRMBatchID);
         } else {
-            printf("Drmhal_QueryBatchIDFromLicenseRespone_soc symbol not found via dlsym\n");
+            printf("Drmhal_QueryBatchIDFromLicenseResponse_soc symbol not found via dlsym\n");
             return false;
         }
     }
@@ -299,18 +299,18 @@ namespace rdk_gstreamer_utils {
         }
     }
 
-    int32_t Drmhal_FetchOuptutProtectionConfigData(const void *f_pvCallbackData, int  f_dwCallbackType,
+    int32_t Drmhal_FetchOutputProtectionConfigData(const void *f_pvCallbackData, int  f_dwCallbackType,
                                     const void *f_pKID, const void *f_pLID, const void *f_pv, max_resolution_update_cb cb)
     {
-        typedef int32_t (*Drmhal_FetchOuptutProtectionConfigData_soc_Func)(const void*, int, const void*, const void*, const void*, max_resolution_update_cb);
-        static Drmhal_FetchOuptutProtectionConfigData_soc_Func func = nullptr;
+        typedef int32_t (*Drmhal_FetchOutputProtectionConfigData_soc_Func)(const void*, int, const void*, const void*, const void*, max_resolution_update_cb);
+        static Drmhal_FetchOutputProtectionConfigData_soc_Func func = nullptr;
         if (!func) {
-            func = (Drmhal_FetchOuptutProtectionConfigData_soc_Func)dlsym(RTLD_DEFAULT, "Drmhal_FetchOuptutProtectionConfigData_soc");
+            func = (Drmhal_FetchOutputProtectionConfigData_soc_Func)dlsym(RTLD_DEFAULT, "Drmhal_FetchOutputProtectionConfigData_soc");
         }
         if (func) {
             return func(f_pvCallbackData, f_dwCallbackType, f_pKID, f_pLID, f_pv, cb);
         } else {
-            printf("Drmhal_FetchOuptutProtectionConfigData_soc symbol not found via dlsym\n");
+            printf("Drmhal_FetchOutputProtectionConfigData_soc symbol not found via dlsym\n");
             return -1;
         }
     }
