@@ -18,28 +18,37 @@
 #
 
 
-EXTRA_CXXFLAGS = -Wno-attributes -Wall -g -fpermissive -std=c++1y -fPIC
+EXTRA_CXXFLAGS = -Wno-attributes -Wall -g -fpermissive -std=c++1y -fPIC -I.
 EXTRA_LDFLAGS = -lgstreamer-1.0 -lglib-2.0 -Wl,-rpath=../../,-rpath=./ -lrdkgstreamerutilsplatform
+CLIENT_EXTRA_LDFLAGS = -lgstreamer-1.0 -lglib-2.0 -Wl,-rpath=../../,-rpath=./ 
 
 SOURCES = rdk_gstreamer_utils.cpp
+CLIENT_SOURCES = rialto/rdk_gstreamer_utils_client.cpp
 
-OBJS=$(addsuffix .o, $(basename $(SOURCES)))
+OBJS = $(SOURCES:.cpp=.o)
+CLIENT_OBJS = $(CLIENT_SOURCES:.cpp=.o)
+
 LIBRDKGSTREAMERUTILS_LIB=librdkgstreamerutils.so
+LIBRDKGSTREAMERUTILS_CLIENT_LIB=librdkgstreamerclientutils.so
 
-.phony: lib clean
+.PHONY: lib clean cleanall
 
-
-lib: $(LIBRDKGSTREAMERUTILS_LIB)
+lib: $(LIBRDKGSTREAMERUTILS_LIB) $(LIBRDKGSTREAMERUTILS_CLIENT_LIB)
 
 %.o: %.cpp
-	 @echo Compiling $<...
-	 $(CXX) -c $< $(EXTRA_CXXFLAGS) $(CXXFLAGS) $(PLATFORM_FLAGS) -o $@
+	@echo Compiling $<...
+	$(CXX) -c $< $(EXTRA_CXXFLAGS) $(CXXFLAGS) $(PLATFORM_FLAGS) -o $@
 
-$(LIBRDKGSTREAMERUTILS_LIB):  $(OBJS)
-	@echo Dynamic library creating $(OBJS) ...
-	$(CXX) $(OBJS) $(EXTRA_LDFLAGS) -shared -fPIC -o $@
+$(LIBRDKGSTREAMERUTILS_LIB): $(OBJS)
+	@echo Creating $@ ...
+	$(CXX) $(OBJS) $(EXTRA_LDFLAGS) -shared -o $@
+
+$(LIBRDKGSTREAMERUTILS_CLIENT_LIB): $(CLIENT_OBJS)
+	@echo Creating $@ ...
+	$(CXX) $(CLIENT_OBJS) $(CLIENT_EXTRA_LDFLAGS) -shared -o $@
+
 clean:
-	@rm -rf $(LIBRDKGSTREAMERUTILS_LIB)
-cleanall:
-	@rm -rf $(LIBRDKGSTREAMERUTILS_LIB) *.o
+	rm -f $(LIBRDKGSTREAMERUTILS_LIB) $(LIBRDKGSTREAMERUTILS_CLIENT_LIB)
 
+cleanall:
+	rm -f $(LIBRDKGSTREAMERUTILS_LIB) $(LIBRDKGSTREAMERUTILS_CLIENT_LIB) *.o rialto/*.o
