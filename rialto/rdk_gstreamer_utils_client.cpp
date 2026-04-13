@@ -308,7 +308,7 @@ namespace rdk_gstreamer_utils {
     }
     void audioMixerGetDeviceInfo(uint32_t& preferredFrames, uint32_t& maximumFrames)
     {
-        uint64_t maxBytes = GST_FIFO_SIZE_MS * 48 * 4;  // 100ms of PCM data = 4800 frames * 4 bytes
+        uint64_t maxBytes = GST_FIFO_SIZE_MS * 48 * 4;  // 48ms of PCM data at 48kHz = 2304 frames * 4 bytes
         maximumFrames = maxBytes / 4;
         preferredFrames = maximumFrames / 4;
     }
