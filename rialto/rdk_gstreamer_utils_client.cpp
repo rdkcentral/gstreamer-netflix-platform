@@ -38,8 +38,8 @@ namespace rdk_gstreamer_utils {
         AUDCHG_SET = 2,
         AUDCHG_ALIGN = 3,
     };
-    bool mPassthroughEnabled = false;
-    GstElement* retrieveGstElementByName(GstElement *element, const char *targetName)
+    static bool mPassthroughEnabled = false;
+    static GstElement* retrieveGstElementByName(GstElement *element, const char *targetName)
     {
         GstElement *re = NULL;
         if (GST_IS_BIN(element)) {
