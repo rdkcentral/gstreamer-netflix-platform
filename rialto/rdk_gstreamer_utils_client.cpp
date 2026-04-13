@@ -249,7 +249,6 @@ namespace rdk_gstreamer_utils {
         GstElement *audioSinkGst = retrieveGstElementByName(pgstUtilsPlaybackGroup->gstPipeline, PLATFORM_AUDIODECODER);
         if( nullptr != audioSinkGst )
         {
-            GstState current_state, pending;
             GstCaps *oldCaps = gst_caps_copy(*appsrcCaps);
             gchar *oldCapsString = gst_caps_to_string(oldCaps);
             LOG_RGU("performAudioTrackCodecChannelSwitch(): Old caps: %s" , oldCapsString);
