@@ -90,9 +90,22 @@ namespace rdk_gstreamer_utils {
         GstElement* videodecoder = retrieveGstElementByName(pipeline, videoDecoderName);
         const char* AudioUnderflowSignal = PLATFORM_BUFFERUNDERFLOW_SIGNAL;
         const char* VideoUnderflowSignal = PLATFORM_BUFFERUNDERFLOW_SIGNAL;
+
+        if (!audiodecoder)
+        {
+            g_warning("installUnderflowCallbackFromPlatform: Failed to find audio decoder element '%s' in pipeline", audiodecodername);
+            return false;
+        }
+
+        if (!videodecoder)
+        {
+            g_warning("installUnderflowCallbackFromPlatform: Failed to find video decoder element '%s' in pipeline", videoDecoderName);
+            return false;
+        }
+
         gulong id_audio = g_signal_connect(audiodecoder, AudioUnderflowSignal, underflowAudioCallback, data);
         gulong id_video = g_signal_connect(videodecoder, VideoUnderflowSignal, underflowVideoCallback, data);
-	return id_audio > 0 && id_video > 0;
+        return id_audio > 0 && id_video > 0;
     }
     bool IntialVolSettingNeeded()
     {
