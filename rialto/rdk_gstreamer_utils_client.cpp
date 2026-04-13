@@ -135,6 +135,12 @@ namespace rdk_gstreamer_utils {
                                                         G_TYPE_UINT, gapduration, "discontinuity-gap", G_TYPE_INT64,
                                                         gapdiscontinuity, "audio-aac", G_TYPE_BOOLEAN, audioaac, nullptr);
           LOG_RGU("processAudioGap StartPts[%lld] Duration [%u] gapdiscontinuity[%lld] aac[%d]\n", gapstartpts, gapduration, gapdiscontinuity, audioaac );
+          if (!rialtoAudioSink)
+          {
+             LOG_RGU("processAudioGap: Failed to find audio sink '%s', ignoring gap parameters\n", rialtoAudioSinkName);
+             gst_structure_free(dataStruct);
+             return;
+          }
           g_object_set(rialtoAudioSink, "gap", dataStruct, nullptr);
           gst_structure_free(dataStruct);
        }
