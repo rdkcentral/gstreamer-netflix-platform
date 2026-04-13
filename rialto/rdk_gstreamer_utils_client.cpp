@@ -292,8 +292,6 @@ namespace rdk_gstreamer_utils {
             if (g_strrstr(elementName, "rialtomseaudiosink")) {
                 LOG_RGU( "limit-buffering-ms 1500\n" );
                 g_object_set( G_OBJECT(element), "limit-buffering-ms", 1500, NULL); /* limit to 1500ms for faster audio switching */
-            }
-            if (g_strrstr(elementName, "rialtomseaudiosink")) {
                 LOG_RGU( "setting use-buffering FALSE\n" );
                 g_object_set( G_OBJECT(element), "use-buffering", FALSE, NULL);
             }
