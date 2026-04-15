@@ -23,7 +23,7 @@ EXTRA_LDFLAGS = -lgstreamer-1.0 -lglib-2.0 -Wl,-rpath=../../,-rpath=./ -lrdkgstr
 RIALTO_CLIENT_EXTRA_LDFLAGS = -lgstreamer-1.0 -lglib-2.0 -Wl,-rpath=../../,-rpath=./ 
 
 SOURCES = rdk_gstreamer_utils.cpp
-RIALTO_CLIENT_SOURCES = rialto/rdk_gstreamer_utils_client.cpp
+RIALTO_CLIENT_SOURCES = rialto/rdk_gstreamer_utils_rltclient.cpp.cpp
 
 OBJS = $(SOURCES:.cpp=.o)
 RIALTO_CLIENT_OBJS = $(RIALTO_CLIENT_SOURCES:.cpp=.o)
