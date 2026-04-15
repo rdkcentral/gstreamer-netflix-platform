@@ -235,7 +235,6 @@ namespace rdk_gstreamer_utils {
         *pAudioChangeTargetPts = *pcurrentDispPts;
         *audio_change_stage = AUDCHG_ALIGN;
         *pui32Delay = 0;
-        pgstUtilsPlaybackGroup->isAudioAAC = *audioaac;
         LOG_RGU("performAudioTrackCodecChannelSwitch(): Sending flush-start event to rialto sink");
         flush_start = gst_event_new_flush_start();
         *ret = gst_element_send_event(aSrc, flush_start);
@@ -257,6 +256,7 @@ namespace rdk_gstreamer_utils {
             *appsrcCaps = nullptr;
 			rdk_gstreamer_utils::configAudioCap(pAudioAttr, audioaac, svpenabled, appsrcCaps);
             gchar *newCapsString = gst_caps_to_string(*appsrcCaps);
+        	pgstUtilsPlaybackGroup->isAudioAAC = *audioaac;
             LOG_RGU("performAudioTrackCodecChannelSwitch(): New caps: %s" , newCapsString);
             g_free(newCapsString); 
             LOG_RGU("performAudioTrackCodecChannelSwitch(): Perform audio switch if caps changed");
