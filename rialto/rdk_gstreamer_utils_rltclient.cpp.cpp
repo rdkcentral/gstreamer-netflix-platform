@@ -131,16 +131,15 @@ namespace rdk_gstreamer_utils {
        {
           const char* rialtoAudioSinkName = PLATFORM_AUDIODECODER;
           GstElement* rialtoAudioSink = retrieveGstElementByName(pipeline, rialtoAudioSinkName);
+          if (!rialtoAudioSink)
+          {
+             LOG_RGU("processAudioGap: Failed to find audio sink '%s', ignoring gap parameters\n", rialtoAudioSinkName);
+             return;
+          }
           GstStructure *dataStruct = gst_structure_new("gap-params", "position", G_TYPE_INT64, gapstartpts, "duration",
                                                         G_TYPE_UINT, gapduration, "discontinuity-gap", G_TYPE_INT64,
                                                         gapdiscontinuity, "audio-aac", G_TYPE_BOOLEAN, audioaac, nullptr);
           LOG_RGU("processAudioGap StartPts[%lld] Duration [%u] gapdiscontinuity[%lld] aac[%d]\n", gapstartpts, gapduration, gapdiscontinuity, audioaac );
-          if (!rialtoAudioSink)
-          {
-             LOG_RGU("processAudioGap: Failed to find audio sink '%s', ignoring gap parameters\n", rialtoAudioSinkName);
-             gst_structure_free(dataStruct);
-             return;
-          }
           g_object_set(rialtoAudioSink, "gap", dataStruct, nullptr);
           gst_structure_free(dataStruct);
        }
@@ -153,6 +152,7 @@ namespace rdk_gstreamer_utils {
     }
     GstElement * configureUIAudioSink(bool TTSenabled)
     {
+        (void)TTSenabled;
         GstElement *audioSink = NULL;
         audioSink = gst_element_factory_make (PLATFORM_UIAUDIO_SINK,PLATFORM_UIAUDIO_SINK);
         return audioSink;
@@ -253,7 +253,9 @@ namespace rdk_gstreamer_utils {
             gchar *oldCapsString = gst_caps_to_string(oldCaps);
             LOG_RGU("performAudioTrackCodecChannelSwitch(): Old caps: %s" , oldCapsString);
             g_free(oldCapsString);
-            rdk_gstreamer_utils::configAudioCap(pAudioAttr, audioaac, svpenabled, appsrcCaps);
+            g_free(oldCapsString);
+            gst_caps_unref(*appsrcCaps);
+            *appsrcCaps = nullptr;
             gchar *newCapsString = gst_caps_to_string(*appsrcCaps);
             LOG_RGU("performAudioTrackCodecChannelSwitch(): New caps: %s" , newCapsString);
             g_free(newCapsString); 

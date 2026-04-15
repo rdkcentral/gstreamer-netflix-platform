@@ -26,7 +26,7 @@ SOURCES = rdk_gstreamer_utils.cpp
 RIALTO_CLIENT_SOURCES = rialto/rdk_gstreamer_utils_rltclient.cpp.cpp
 
 OBJS = $(SOURCES:.cpp=.o)
-RIALTO_CLIENT_OBJS = $(RIALTO_CLIENT_SOURCES:.cpp=.o)
+RIALTO_CLIENT_OBJS = $(patsubst %.cpp.cpp,%.o,$(RIALTO_CLIENT_SOURCES))
 
 LIBRDKGSTREAMERUTILS_LIB=librdkgstreamerutils.so
 LIBRDKGSTREAMERUTILS_RLT_CLIENT_LIB=librdkgstreamerrltclientutils.so
