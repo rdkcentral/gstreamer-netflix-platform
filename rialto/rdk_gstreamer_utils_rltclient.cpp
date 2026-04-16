@@ -254,7 +254,7 @@ namespace rdk_gstreamer_utils {
             g_free(oldCapsString);
             gst_caps_unref(*appsrcCaps);
             *appsrcCaps = nullptr;
-			rdk_gstreamer_utils::configAudioCap(pAudioAttr, audioaac, svpenabled, appsrcCaps, mPassthroughEnabled);
+			rdk_gstreamer_utils::configAudioCap(pAudioAttr, audioaac, svpenabled, appsrcCaps, passthroughProperty);
             gchar *newCapsString = gst_caps_to_string(*appsrcCaps);
         	pgstUtilsPlaybackGroup->isAudioAAC = *audioaac;
             LOG_RGU("performAudioTrackCodecChannelSwitch(): New caps: %s" , newCapsString);
