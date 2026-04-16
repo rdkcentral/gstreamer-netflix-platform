@@ -41,22 +41,22 @@ namespace rdk_gstreamer_utils {
     static bool mPassthroughEnabled = false;
     static GstElement* retrieveGstElementByName(GstElement *element, const char *targetName)
     {
-        GstElement *re = NULL;
+        GstElement *retrieveGstElement = NULL;
         if (GST_IS_BIN(element)) {
-            GstIterator* it = gst_bin_iterate_elements(GST_BIN(element));
+            GstIterator* iterateElement = gst_bin_iterate_elements(GST_BIN(element));
             GValue item = G_VALUE_INIT;
             bool done = false;
             while(!done) {
-                switch (gst_iterator_next(it, &item)) {
+                switch (gst_iterator_next(iterateElement, &item)) {
                     case GST_ITERATOR_OK:
                     {
-                        GstElement *next = GST_ELEMENT(g_value_get_object(&item));
-                        done = (re = retrieveGstElementByName(next, targetName)) != NULL;
+                        GstElement *nextElement = GST_ELEMENT(g_value_get_object(&item));
+                        done = (retrieveGstElement = retrieveGstElementByName(nextElement, targetName)) != NULL;
                         g_value_reset (&item);
                         break;
                     }
                     case GST_ITERATOR_RESYNC:
-                        gst_iterator_resync (it);
+                        gst_iterator_resync (iterateElement);
                         break;
                     case GST_ITERATOR_ERROR:
                     case GST_ITERATOR_DONE:
@@ -65,17 +65,17 @@ namespace rdk_gstreamer_utils {
                 }
             }
             g_value_unset (&item);
-            gst_iterator_free(it);
+            gst_iterator_free(iterateElement);
         } else {
             gchar* elemName = gst_element_get_name(element);
             if(elemName != NULL) {
                 if (strstr(elemName, targetName)) {
-                    re = element;
+                    retrieveGstElement = element;
                 }
                 g_free(elemName);
             }
         }
-        return re;
+        return retrieveGstElement;
     }
     void initVirtualDisplayHeightandWidthFromPlatform(unsigned int* mVirtualDisplayHeight, unsigned int* mVirtualDisplayWidth)
     {
@@ -254,7 +254,7 @@ namespace rdk_gstreamer_utils {
             g_free(oldCapsString);
             gst_caps_unref(*appsrcCaps);
             *appsrcCaps = nullptr;
-			rdk_gstreamer_utils::configAudioCap(pAudioAttr, audioaac, svpenabled, appsrcCaps);
+			rdk_gstreamer_utils::configAudioCap(pAudioAttr, audioaac, svpenabled, appsrcCaps, mPassthroughEnabled);
             gchar *newCapsString = gst_caps_to_string(*appsrcCaps);
         	pgstUtilsPlaybackGroup->isAudioAAC = *audioaac;
             LOG_RGU("performAudioTrackCodecChannelSwitch(): New caps: %s" , newCapsString);
