@@ -237,6 +237,22 @@ namespace rdk_gstreamer_utils {
         constructLLAudioPlayer_soc(numChannel,gstPipeline ,aSrc,aSink,aFilter,aDecoder);
     }
 
+    bool buildLLPAudioCapString(AudioAttributes *pAttrib, char * audiocapstring)
+    {
+        typedef bool (*buildLLPAudioCapString_soc_Func)(AudioAttributes*, char*);
+        static buildLLPAudioCapString_soc_Func func = nullptr;
+        if (!func) {
+            func = (buildLLPAudioCapString_soc_Func)dlsym(RTLD_DEFAULT, "buildLLPAudioCapString_soc");
+        }
+        if (func) {
+            return func(pAttrib, audiocapstring);
+        } else {
+            // Handle error: symbol not found
+            printf("buildLLPAudioCapString_soc symbol not found via dlsym\n");
+            return false;
+        }
+    }
+
 // =========================================== DRM APIs ================================================
     int32_t Drmhal_Platform_Initialize(std::string DrmStorePath)
     {
