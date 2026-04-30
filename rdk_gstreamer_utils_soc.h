@@ -55,7 +55,7 @@ namespace rdk_gstreamer_utils
     bool getDelayTimerEnabled_soc();
     void SetAudioServerParam_soc(bool enabled);
     void constructLLAudioPlayer_soc(int numChannel ,GstElement *gstPipeline ,GstElement *aSrc,GstElement *aSink,GstElement *aFilter,GstElement *aDecoder);
-    bool buildLLPAudioCapString_soc(AudioAttributes *pAttrib, char * audiocapstring);
+    bool buildLLPAudioCapString_soc(AudioAttributes *pAttrib, char * audiocapstring, int audiocapstringSz);
 // =========================================== DRM APIs ================================================
 
     typedef void (*max_resolution_update_cb)(const unsigned char *databuffer, size_t len, const void *f_pv);
