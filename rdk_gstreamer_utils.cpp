@@ -76,7 +76,9 @@ namespace rdk_gstreamer_utils {
 
     bool installUnderflowCallbackFromPlatform(GstElement *pipeline, GCallback underflowVideoCallback, GCallback underflowAudioCallback, gpointer data)
     {
+        GST_ERROR("installUnderflowCallbackFromPlatform START");
         const char* audiodecodername = getAudioDecoderName_soc();
+        GST_ERROR("installUnderflowCallbackFromPlatform audiodecodername=%s", audiodecodername);
         GstElement* audiodecoder = retrieveGstElementByName(pipeline, audiodecodername);
         GstElement* videodecoder = retrieveGstElementByName(pipeline, "westerossink"); //default on RDK platforms
         const char* AudioUnderflowSignal = getAudioUnderflowSignalName_soc();
@@ -84,6 +86,7 @@ namespace rdk_gstreamer_utils {
 
         gulong id_audio = g_signal_connect(audiodecoder, AudioUnderflowSignal, underflowAudioCallback, data);
         gulong id_video = g_signal_connect(videodecoder, VideoUnderflowSignal, underflowVideoCallback, data);
+        GST_ERROR("installUnderflowCallbackFromPlatform id_audio=%lu id_video=%lu", id_audio, id_video);
 
 	return id_audio > 0 && id_video > 0;
     }
