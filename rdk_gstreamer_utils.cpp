@@ -24,6 +24,7 @@
 #include <glib.h>
 #include <string.h>
 #include <dlfcn.h>
+#include <stdio.h>
 
 using namespace std;
 
@@ -76,16 +77,56 @@ namespace rdk_gstreamer_utils {
 
     bool installUnderflowCallbackFromPlatform(GstElement *pipeline, GCallback underflowVideoCallback, GCallback underflowAudioCallback, gpointer data)
     {
+	printf("[Underflow] installUnderflowCallbackFromPlatform entered\n");
         const char* audiodecodername = getAudioDecoderName_soc();
+	printf("[Underflow] Audio decoder name: %s\n",audiodecodername ? audiodecodername : "NULL");
         GstElement* audiodecoder = retrieveGstElementByName(pipeline, audiodecodername);
         GstElement* videodecoder = retrieveGstElementByName(pipeline, "westerossink"); //default on RDK platforms
+	printf("[Underflow] Audio decoder element: %p\n", audiodecoder);
+        printf("[Underflow] Video decoder element: %p\n",videodecoder);
         const char* AudioUnderflowSignal = getAudioUnderflowSignalName_soc();
         const char* VideoUnderflowSignal = getVideoUnderflowSignalName_soc();
+
+	printf("[Underflow] Audio underflow signal: %s\n",
+           AudioUnderflowSignal ? AudioUnderflowSignal : "NULL");
+
+        printf("[Underflow] Video underflow signal: %s\n",
+           VideoUnderflowSignal ? VideoUnderflowSignal : "NULL");
+
+	guint lookup_audio = 0;
+        guint lookup_video = 0;
+
+        if (audiodecoder && AudioUnderflowSignal)
+        {
+            lookup_audio = g_signal_lookup(AudioUnderflowSignal,
+                            G_OBJECT_TYPE(audiodecoder));
+
+            printf("[Underflow] Audio signal lookup returned: %u\n",
+               lookup_audio);
+        }
+
+        if (videodecoder && VideoUnderflowSignal)
+        {
+            lookup_video = g_signal_lookup(VideoUnderflowSignal,
+                            G_OBJECT_TYPE(videodecoder));
+
+            printf("[Underflow] Video signal lookup returned: %u\n",
+               lookup_video);
+        }
 
         gulong id_audio = g_signal_connect(audiodecoder, AudioUnderflowSignal, underflowAudioCallback, data);
         gulong id_video = g_signal_connect(videodecoder, VideoUnderflowSignal, underflowVideoCallback, data);
 
-	return id_audio > 0 && id_video > 0;
+	printf("[Underflow] Audio g_signal_connect returned: %lu\n", id_audio);
+
+        printf("[Underflow] Video g_signal_connect returned: %lu\n", id_video);
+
+        bool status = (id_audio > 0 && id_video > 0);
+
+        printf("[Underflow] installUnderflowCallbackFromPlatform returned: %d\n", status);
+
+        return status;
+//	return id_audio > 0 && id_video > 0;
     }
 
     bool IntialVolSettingNeeded()
